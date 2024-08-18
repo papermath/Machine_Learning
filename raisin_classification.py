@@ -16,22 +16,17 @@ y = raisin.Class
 scaler = StandardScaler()
 x = pd.DataFrame(scaler.fit_transform(x), columns = x.columns)
 
-for i in [4,5,6]:
-    pca = PCA(n_components = i)
-    x = pca.fit_transform(x)
 
-    x_train, x_test, y_train, y_test = train_test_split(x,y, train_size = 0.8, random_state = 100)
+pca = PCA(n_components = 6)
+x = pca.fit_transform(x)
 
-    svm = SVC(kernel = "rbf", random_state = 100)
+x_train, x_test, y_train, y_test = train_test_split(x,y, train_size = 0.8, random_state = 100)
 
-    parameters = {"gamma": np.logspace(-20,-1,40), "C": np.logspace(-20,-1,40)}
+print(x_train)
+print(x_test)
+print(y_train)
+print(y_test)
 
-    grid = GridSearchCV(estimator = svm, param_grid = parameters, cv = 5)
-    grid.fit(x_train, y_train)
-
-    print(i)
-    print(grid.best_estimator_)
-    print(grid.score(x_test,y_test))
 
 #SVC(C=0.032570206556597696, gamma=0.1, random_state=100)
 #0.8555555555555555
