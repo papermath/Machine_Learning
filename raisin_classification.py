@@ -1,10 +1,12 @@
+#currently working on branch logistic
 import pandas as pd
 import numpy as np
+from sklearn.linear_model import LogisticRegression
+from sklearn.svm import SVC
 from sklearn.preprocessing import StandardScaler
 from sklearn.model_selection import train_test_split
+from sklearn.discriminant_analysis import LinearDiscriminantAnalysis
 from sklearn.model_selection import GridSearchCV
-from sklearn.decomposition import PCA
-from sklearn.svm import SVC
 
 raisin = pd.read_csv("Raisin_Dataset.csv")
 
@@ -14,21 +16,19 @@ x = raisin.drop(columns = ["Class"])
 y = raisin.Class
 
 scaler = StandardScaler()
-x = pd.DataFrame(scaler.fit_transform(x), columns = x.columns)
+scaled_x = scaler.fit_transform(x)
 
+x_train, x_test, y_train, y_test = train_test_split(x,y, train_size = 0.8, random_state = 42)
 
-pca = PCA(n_components = 6)
-x = pca.fit_transform(x)
+svm = SVC(C=0.032570206556597696, gamma=0.1, random_state=100)
+svm.fit(x_train, y_train)
 
-x_train, x_test, y_train, y_test = train_test_split(x,y, train_size = 0.8, random_state = 100)
+print(svm.score(x_train,y_train))
+print(svm.score(x_test, y_test))
 
-print(x_train)
-print(x_test)
-print(y_train)
-print(y_test)
+lr = LogisticRegression(random_state = 42, C = 0.01, tol = 0.00001, max_iter = 10000, solver = "newton-cholesky")
 
+lr.fit(x_train, y_train)
 
-#SVC(C=0.032570206556597696, gamma=0.1, random_state=100)
-#0.8555555555555555
-
-
+print(lr.score(x_train, y_train))
+print(lr.score(x_test, y_test))
