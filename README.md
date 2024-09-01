@@ -22,5 +22,4 @@ Adaptive Boosting Classifier Score:
 Gradient Boosting Classifier Score:
 0.884
 ```
-
-
+bank.py uses a [bank marketing](https://archive.ics.uci.edu/dataset/222/bank+marketing) dataset from UCI Machine Learning and utilizes a simple Pipleine with two main models in the search space, a logistic regression and a support vector classifier. I was not able to test it due to the complexity of the support vector classifier, but I was able to conclude the logistic regression obtained around 90% accuracy.
